@@ -12,7 +12,7 @@ class ProductCategoryController extends Controller
     public function all(Request $request)
     {
         $id = $request->input('id');
-        $limit = $request->input('limit');
+        $limit = $request->input('limit', 6);
         $name = $request->input('name');
         $show_product = $request->input('show_product');
 
@@ -42,7 +42,7 @@ class ProductCategoryController extends Controller
         }
 
         return ResponseFormatter::success(
-            $category,
+            $category->paginate($limit),
             'Data Kategori Berhasil Diambil'
         );
     }
