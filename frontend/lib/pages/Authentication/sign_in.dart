@@ -127,7 +127,9 @@ class SignInPage extends StatelessWidget {
         height: 50,
         // margin: EdgeInsets.symmetric(horizontal: 10),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
           style: TextButton.styleFrom(
               backgroundColor: primaryColor,
               shape: RoundedRectangleBorder(
