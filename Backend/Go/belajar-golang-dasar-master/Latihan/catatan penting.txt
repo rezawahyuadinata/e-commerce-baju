@@ -1,0 +1,3 @@
+- parameter adalah suatu fungsi dalam function yang nilainya dapat dimanipulasi di luar function induknya
+- return adalah suatua fungsi dalam function yang nilainya tidak dapat dimanipulasi di luar function induknya
+- varags artinya datanya bisa menerima lebih dari satu inout, atau anggap saja semacam array
