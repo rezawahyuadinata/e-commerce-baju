@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/Authentication/sign_in.dart';
 import 'package:frontend/pages/home/chat_page.dart';
 import 'package:frontend/pages/home/home_page.dart';
-import 'package:frontend/pages/home/pofile_page.dart';
+import 'package:frontend/pages/home/profile_page.dart';
 import 'package:frontend/pages/home/wishlist_page.dart';
 import 'package:frontend/theme.dart';
 
@@ -36,16 +36,18 @@ class _MainPageState extends State<MainPage> {
         ),
         child: BottomAppBar(
           shape: CircularNotchedRectangle(),
-          notchMargin: 16,
+          notchMargin: 12,
           clipBehavior: Clip.antiAlias,
           child: BottomNavigationBar(
               backgroundColor: backgroundColor4,
               type: BottomNavigationBarType.fixed,
               onTap: (value) {
                 print(value);
-                setState(() {
-                  currentindex = value;
-                });
+                setState(
+                  () {
+                    currentindex = value;
+                  },
+                );
               },
               items: [
                 BottomNavigationBarItem(
