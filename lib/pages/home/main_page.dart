@@ -123,7 +123,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     return Scaffold(
-      backgroundColor: backgroundColor1,
+      backgroundColor: currentindex == 0 ? backgroundColor1 : backgroundColor3,
       body: bodyHalaman(),
       floatingActionButton: buttonBawah(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

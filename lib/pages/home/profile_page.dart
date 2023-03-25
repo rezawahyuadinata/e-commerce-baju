@@ -99,9 +99,69 @@ class ProfilePage extends StatelessWidget {
                   fontWeight: semiBold,
                 ),
               ),
-              menuItem('Edit Profile'),
-              menuItem('Edit Profile'),
-              menuItem('Edit Profile'),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: menuItem('Edit Profile')),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/order');
+                  },
+                  child: menuItem('Your Orders')),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/help');
+                  },
+                  child: menuItem('Help')),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'General',
+                style: primaryTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
+                ),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/privacy');
+                  },
+                  child: menuItem('Privacy & Policy')),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/term');
+                  },
+                  child: menuItem('Term Of Service')),
+              GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 200,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text('Rate My App'),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: menuItem('Rate App')),
             ],
           ),
         ),
