@@ -29,9 +29,79 @@ class _ProductPageState extends State<ProductPage> {
   ];
 
   int currentIndex = 0;
+  bool isWishlist = false;
 
   @override
   Widget build(BuildContext context) {
+    Future<void> showSuccessDialog() async {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) => Container(
+                width: MediaQuery.of(context).size.width - (2 * defaultMargin),
+                child: AlertDialog(
+                  backgroundColor: backgroundColor3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  content: SingleChildScrollView(
+                      child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Icon(
+                            Icons.close,
+                            color: primaryTextColor,
+                          ),
+                        ),
+                      ),
+                      Image.asset(
+                        'assets/icons/icon_success.png',
+                        width: 100,
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Yatta :)',
+                        style: primaryTextStyle.copyWith(
+                            fontSize: 18, fontWeight: semiBold),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Item Berhasil di tambahkan',
+                        style: secondaryTextStyle.copyWith(fontSize: 14),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        width: 154,
+                        height: 44,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
+                          onPressed: () {},
+                          child: Text(
+                            'Lihat Keranjang',
+                            style: primaryTextStyle.copyWith(
+                                fontSize: 16, fontWeight: medium),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+                ),
+              ));
+    }
+
     Widget indikator(int index) {
       return Container(
         width: currentIndex == index ? 16 : 4,
@@ -153,9 +223,39 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ],
                   )),
-                  Image.asset(
-                    'assets/icons/button_wishlist.png',
-                    width: 46,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isWishlist = !isWishlist;
+                      });
+                      if (isWishlist) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: secondaryColor,
+                            content: Text(
+                              'Has been added to the whitelist',
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: alertColor,
+                            content: Text(
+                              'Has been removed to the whitelist',
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Image.asset(
+                      isWishlist
+                          ? 'assets/icons/button_wishlist_blue.png'
+                          : 'assets/icons/button_wishlist.png',
+                      width: 46,
+                    ),
                   )
                 ],
               ),
@@ -249,12 +349,17 @@ class _ProductPageState extends State<ProductPage> {
               margin: EdgeInsets.all(defaultMargin),
               child: Row(
                 children: [
-                  Container(
-                    width: 54,
-                    height: 54,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/icons/button_chat.png'),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/detail-chat');
+                    },
+                    child: Container(
+                      width: 54,
+                      height: 54,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/icons/button_chat.png'),
+                        ),
                       ),
                     ),
                   ),
@@ -265,7 +370,9 @@ class _ProductPageState extends State<ProductPage> {
                     child: Container(
                       height: 54,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showSuccessDialog();
+                        },
                         style: TextButton.styleFrom(
                             foregroundColor: primaryColor,
                             shape: RoundedRectangleBorder(

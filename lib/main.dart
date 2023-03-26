@@ -6,6 +6,7 @@ import 'package:frontend/pages/home/Widget/edit_profile_widget.dart';
 import 'package:frontend/pages/home/Widget/help_widget.dart';
 import 'package:frontend/pages/home/Widget/hukum_widget.dart';
 import 'package:frontend/pages/home/Widget/pesanan_widget.dart';
+import 'package:frontend/pages/home/cart_page.dart';
 import 'package:frontend/pages/home/detail_chat_page.dart';
 import 'package:frontend/pages/home/main_page.dart';
 import 'package:frontend/pages/home/produk_page.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/privacy': (context) => PrivacyProfilePage(),
         '/term': (context) => TermProfilePage(),
         '/product': (context) => ProductPage(),
+        '/cart': (context) => CartPage(),
       },
     );
   }
