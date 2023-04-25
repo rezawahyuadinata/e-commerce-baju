@@ -13,6 +13,9 @@ import 'package:frontend/pages/home/detail_chat_page.dart';
 import 'package:frontend/pages/home/main_page.dart';
 import 'package:frontend/pages/home/produk_page.dart';
 import 'package:frontend/pages/splash_page.dart';
+import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(MyApp());
@@ -22,24 +25,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => MyHomePage(),
-        '/sign-in': (context) => SignInPage(),
-        '/sign-up': (context) => SignUpPage(),
-        '/home': (context) => MainPage(),
-        '/detail-chat': (context) => DetailChatPage(),
-        '/profile': (context) => EditProfilePage(),
-        '/order': (context) => OrderProfilePage(),
-        '/help': (context) => HelpProfilePage(),
-        '/privacy': (context) => PrivacyProfilePage(),
-        '/term': (context) => TermProfilePage(),
-        '/product': (context) => ProductPage(),
-        '/cart': (context) => CartPage(),
-        '/checkout': (context) => CheckoutPage(),
-        '/checkout-success': (context) => CheckoutSuccessPage(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProdukProvider(),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (context) => MyHomePage(),
+          '/sign-in': (context) => SignInPage(),
+          '/sign-up': (context) => SignUpPage(),
+          '/home': (context) => MainPage(),
+          '/detail-chat': (context) => DetailChatPage(),
+          '/profile': (context) => EditProfilePage(),
+          '/order': (context) => OrderProfilePage(),
+          '/help': (context) => HelpProfilePage(),
+          '/privacy': (context) => PrivacyProfilePage(),
+          '/term': (context) => TermProfilePage(),
+          '/product': (context) => ProductPage(),
+          '/cart': (context) => CartPage(),
+          '/checkout': (context) => CheckoutPage(),
+          '/checkout-success': (context) => CheckoutSuccessPage(),
+        },
+      ),
     );
   }
 }

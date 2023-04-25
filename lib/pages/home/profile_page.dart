@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/user_model.dart';
+import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/theme.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserModel user = authProvider.user;
     Widget menuItem(String text) {
       return Container(
         margin: EdgeInsets.only(
@@ -39,9 +44,11 @@ class ProfilePage extends StatelessWidget {
             padding: EdgeInsets.all(defaultMargin),
             child: Row(
               children: <Widget>[
-                Image.asset(
-                  'assets/icons/image_profile.png',
-                  width: 64,
+                ClipOval(
+                  child: Image.network(
+                    user.profilePhotoUrl,
+                    width: 64,
+                  ),
                 ),
                 SizedBox(
                   width: 16,
@@ -51,14 +58,14 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hallo, Reza',
+                        'Hallo, ${user.name}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 24,
                           fontWeight: semiBold,
                         ),
                       ),
                       Text(
-                        '@zynchrome',
+                        '@${user.username}',
                         style: subtitleTextStyle.copyWith(
                           fontSize: 16,
                         ),

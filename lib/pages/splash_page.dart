@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/providers/product_provider.dart';
 import 'package:frontend/theme.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -13,9 +15,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () => Navigator.pushNamed(context, '/sign-in'));
-    // TODO: implement initState
+    getInit();
+
     super.initState();
+  }
+
+  getInit() async {
+    await Provider.of<ProdukProvider>(context, listen: false).getProducts();
+    Navigator.pushNamed(context, '/sign-in');
   }
 
   @override
