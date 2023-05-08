@@ -1,9 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:frontend/models/product_model.dart';
+import 'package:frontend/providers/cart_provider.dart';
+import 'package:frontend/providers/wishlist_provider.dart';
 import 'package:frontend/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
-  ProductPage({super.key});
+  ProductPage({super.key, required this.product});
+
+  final ProdukModel product;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -29,10 +35,11 @@ class _ProductPageState extends State<ProductPage> {
   ];
 
   int currentIndex = 0;
-  bool isWishlist = false;
 
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
     Future<void> showSuccessDialog() async {
       return showDialog(
           context: context,
@@ -88,7 +95,9 @@ class _ProductPageState extends State<ProductPage> {
                               backgroundColor: primaryColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12))),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/cart');
+                          },
                           child: Text(
                             'Lihat Keranjang',
                             style: primaryTextStyle.copyWith(
@@ -155,8 +164,8 @@ class _ProductPageState extends State<ProductPage> {
           ),
           CarouselSlider(
             items: images
-                .map((image) => Image.asset(
-                      image,
+                .map((image) => Image.network(
+                      image.url,
                       width: MediaQuery.of(context).size.width,
                       height: 310,
                       fit: BoxFit.cover,
@@ -173,7 +182,7 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: images.map((e) {
+            children: widget.product.galleries.map((e) {
               index++;
               return indikator(index);
             }).toList(),
@@ -209,14 +218,14 @@ class _ProductPageState extends State<ProductPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Alter Ego Shoes',
+                        widget.product.name,
                         style: primaryTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: semiBold,
                         ),
                       ),
                       Text(
-                        'Hiking',
+                        widget.product.category.name,
                         style: secondaryTextStyle.copyWith(
                           fontSize: 12,
                         ),
@@ -225,10 +234,8 @@ class _ProductPageState extends State<ProductPage> {
                   )),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isWishlist = !isWishlist;
-                      });
-                      if (isWishlist) {
+                      wishlistProvider.setProduct(widget.product);
+                      if (wishlistProvider.isWishlist(widget.product)) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: secondaryColor,
@@ -251,7 +258,7 @@ class _ProductPageState extends State<ProductPage> {
                       }
                     },
                     child: Image.asset(
-                      isWishlist
+                      wishlistProvider.isWishlist(widget.product)
                           ? 'assets/icons/button_wishlist_blue.png'
                           : 'assets/icons/button_wishlist.png',
                       width: 46,
@@ -276,7 +283,7 @@ class _ProductPageState extends State<ProductPage> {
                 children: [
                   Text('Price Start From', style: primaryTextStyle),
                   Text(
-                    '\$143.98',
+                    '\$${widget.product.price}',
                     style: priceTextStyle.copyWith(
                         fontSize: 16, fontWeight: semiBold),
                   )
@@ -303,7 +310,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 12,
                   ),
                   Text(
-                    'Unpaved trails and mixed surfaces are easy when you have the traction and support you need. Casual enoughfor the daily commute',
+                    widget.product.description,
                     style: subtitleTextStyle.copyWith(
                       fontWeight: light,
                     ),
@@ -371,6 +378,7 @@ class _ProductPageState extends State<ProductPage> {
                       height: 54,
                       child: TextButton(
                         onPressed: () {
+                          cartProvider.addCart(widget.product);
                           showSuccessDialog();
                         },
                         style: TextButton.styleFrom(

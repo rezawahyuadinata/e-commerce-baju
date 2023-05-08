@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/home/produk_page.dart';
 
+import '../../../models/product_model.dart';
 import '../../../theme.dart';
 
 class ProductCardWidget extends StatelessWidget {
-  const ProductCardWidget({
+  ProductCardWidget({
     Key? key,
+    required this.product,
   }) : super(key: key);
+
+  final ProdukModel product;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductPage(product: product)));
       },
       child: Container(
         width: 215,
@@ -26,8 +34,8 @@ class ProductCardWidget extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Image.asset(
-              'assets/images/image_shoes.png',
+            Image.network(
+              product.galleries[0].url,
               width: 215,
               height: 158,
               fit: BoxFit.cover,
@@ -38,24 +46,25 @@ class ProductCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Casual',
+                    product.category.name,
                     style: secondaryTextStyle,
                   ),
                   SizedBox(
                     height: 6,
                   ),
                   Text(
-                    'Alter Ego Vision V2',
+                    product.name,
                     style: blackTextStyle.copyWith(
                         fontSize: 18,
                         fontWeight: semiBold,
                         overflow: TextOverflow.ellipsis),
+                    maxLines: 1,
                   ),
                   SizedBox(
                     height: 6,
                   ),
                   Text(
-                    '\$ 60,00',
+                    '\$${product.price}',
                     style: priceTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: medium,
@@ -74,13 +83,19 @@ class ProductCardWidget extends StatelessWidget {
 class ListProductWidget extends StatelessWidget {
   const ListProductWidget({
     Key? key,
+    required this.product,
   }) : super(key: key);
+
+  final ProdukModel product;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductPage(product: product)));
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -90,8 +105,8 @@ class ListProductWidget extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/images/image_shoes.png',
+              child: Image.network(
+                product.galleries[0].url,
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -105,7 +120,7 @@ class ListProductWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Casual',
+                    product.category.name,
                     style: secondaryTextStyle.copyWith(
                       fontSize: 12,
                     ),
@@ -114,7 +129,7 @@ class ListProductWidget extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    'Alter Ego Version V2',
+                    product.name,
                     style: primaryTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: semiBold,
@@ -124,7 +139,7 @@ class ListProductWidget extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    '\$ 60,00',
+                    '\$${product.price}',
                     style: priceTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: medium,

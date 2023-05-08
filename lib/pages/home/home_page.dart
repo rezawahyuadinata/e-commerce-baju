@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/user_model.dart';
 import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/product_provider.dart';
 import 'package:frontend/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     UserModel user = authProvider.user;
+    ProdukProvider productProvider = Provider.of<ProdukProvider>(context);
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -180,12 +182,11 @@ class HomePage extends StatelessWidget {
                     width: defaultMargin,
                   ),
                   Row(
-                    children: [
-                      ProductCardWidget(),
-                      ProductCardWidget(),
-                      ProductCardWidget(),
-                    ],
-                  ),
+                      children: productProvider.products
+                          .map(
+                            (product) => ProductCardWidget(product: product),
+                          )
+                          .toList()),
                 ],
               ),
             ),
@@ -209,11 +210,9 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Column(
-              children: [
-                ListProductWidget(),
-                ListProductWidget(),
-                ListProductWidget(),
-              ],
+              children: productProvider.products
+                  .map((product) => ProductCardWidget(product: product))
+                  .toList(),
             )
           ],
         ),

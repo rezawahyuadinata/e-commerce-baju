@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/cart_model.dart';
 import 'package:frontend/pages/home/Widget/cart_card_widget.dart';
 import 'package:frontend/pages/home/Widget/checkout_card_widget.dart';
+import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/cart_provider.dart';
+import 'package:frontend/providers/transaction_provider.dart';
 
 import 'package:frontend/theme.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({super.key});
+  CheckoutPage({super.key, required this.cart});
+  final KeranjangModel cart;
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    TransaksiProvider transaksiProvider =
+        Provider.of<TransaksiProvider>(context);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleCheckout() async {
+      if (await transaksiProvider.checkout(
+        authProvider.user.token,
+        cartProvider.carts,
+        cartProvider.totalPrice(),
+      )) {
+        cartProvider.carts = [];
+        Navigator.pushNamedAndRemoveUntil(
+            context, 'checkout-success', (route) => false);
+      }
+    }
+
     AppBar header() => AppBar(
           centerTitle: true,
           backgroundColor: backgroundColor1,
@@ -34,7 +57,15 @@ class CheckoutPage extends StatelessWidget {
                   fontWeight: medium,
                 ),
               ),
-              CheckoutCardWidget(),
+              Column(
+                children: cartProvider.carts
+                    .map(
+                      (cart) => CheckoutCardWidget(
+                        cart: cart,
+                      ),
+                    )
+                    .toList(),
+              ),
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(top: defaultMargin),
@@ -137,14 +168,14 @@ class CheckoutPage extends StatelessWidget {
                     ),
                     PaymentSummaryDetail(
                       detail: 'Product Quantity',
-                      keterangan: '2 Items',
+                      keterangan: '${cartProvider.totalItems(cart.id)} Items',
                     ),
                     SizedBox(
                       height: 12,
                     ),
                     PaymentSummaryDetail(
                       detail: 'Product Price',
-                      keterangan: '\$575.96',
+                      keterangan: '\$ ${cartProvider.totalPrice()}',
                     ),
                     SizedBox(
                       height: 12,
@@ -171,7 +202,7 @@ class CheckoutPage extends StatelessWidget {
                           style: priceTextStyle.copyWith(fontWeight: semiBold),
                         ),
                         Text(
-                          '\$575.96',
+                          '\$ ${cartProvider.totalPrice() + 10}',
                           style: priceTextStyle.copyWith(fontWeight: semiBold),
                         )
                       ],
@@ -193,10 +224,7 @@ class CheckoutPage extends StatelessWidget {
                   vertical: defaultMargin,
                 ),
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/checkout-success', (route) => false);
-                  },
+                  onPressed: handleCheckout,
                   style: TextButton.styleFrom(
                     backgroundColor: primaryColor,
                     shape: RoundedRectangleBorder(

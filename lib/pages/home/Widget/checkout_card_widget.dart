@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/theme.dart';
 
+import '../../../models/cart_model.dart';
+
 class CheckoutCardWidget extends StatelessWidget {
-  const CheckoutCardWidget({super.key});
+  CheckoutCardWidget({super.key, required this.cart});
+  final KeranjangModel cart;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,9 @@ class CheckoutCardWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: DecorationImage(
-                image: AssetImage('assets/images/image_shoes.png'),
+                image: NetworkImage(
+                  cart.product.galleries[0].url,
+                ),
               ),
             ),
           ),
@@ -34,12 +39,12 @@ class CheckoutCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Alter Ego V2',
+                  cart.product.name,
                   style: primaryTextStyle.copyWith(
                       fontWeight: semiBold, overflow: TextOverflow.ellipsis),
                 ),
                 Text(
-                  '\$130.12',
+                  '\$ ${cart.product.price}',
                   style: priceTextStyle,
                 ),
               ],
@@ -49,7 +54,7 @@ class CheckoutCardWidget extends StatelessWidget {
             width: 12,
           ),
           Text(
-            '2 Items',
+            '${cart.quantity} Items',
             style: secondaryTextStyle.copyWith(fontSize: 12),
           )
         ],

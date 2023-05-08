@@ -14,7 +14,10 @@ import 'package:frontend/pages/home/main_page.dart';
 import 'package:frontend/pages/home/produk_page.dart';
 import 'package:frontend/pages/splash_page.dart';
 import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/cart_provider.dart';
 import 'package:frontend/providers/product_provider.dart';
+import 'package:frontend/providers/transaction_provider.dart';
+import 'package:frontend/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -32,7 +35,16 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ProdukProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WishlistProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TransaksiProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -47,9 +59,8 @@ class MyApp extends StatelessWidget {
           '/help': (context) => HelpProfilePage(),
           '/privacy': (context) => PrivacyProfilePage(),
           '/term': (context) => TermProfilePage(),
-          '/product': (context) => ProductPage(),
           '/cart': (context) => CartPage(),
-          '/checkout': (context) => CheckoutPage(),
+          // '/checkout': (context) => CheckoutPage(),
           '/checkout-success': (context) => CheckoutSuccessPage(),
         },
       ),

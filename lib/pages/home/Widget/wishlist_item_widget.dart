@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/product_model.dart';
 import 'package:frontend/theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/wishlist_provider.dart';
 
 class WishlistItemWidget extends StatelessWidget {
-  const WishlistItemWidget({super.key});
-
+  const WishlistItemWidget({super.key, required this.product});
+  final ProdukModel product;
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -23,8 +29,8 @@ class WishlistItemWidget extends StatelessWidget {
       child: Row(children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: Image.asset(
-            'assets/images/image_shoes.png',
+          child: Image.network(
+            product.galleries[0].url,
             width: 60,
           ),
         ),
@@ -36,21 +42,26 @@ class WishlistItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Alter Ego V2 Shoes',
+                product.name,
                 style: primaryTextStyle.copyWith(
                   fontWeight: semiBold,
                 ),
               ),
               Text(
-                '\$ 56.78',
+                '\$ ${product.price}',
                 style: priceTextStyle,
               )
             ],
           ),
         ),
-        Image.asset(
-          'assets/icons/button_wishlist_blue.png',
-          width: 34,
+        GestureDetector(
+          onTap: () {
+            wishlistProvider.setProduct(product);
+          },
+          child: Image.asset(
+            'assets/icons/button_wishlist_blue.png',
+            width: 34,
+          ),
         )
       ]),
     );
