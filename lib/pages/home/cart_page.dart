@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/home/Widget/cart_card_widget.dart';
 import 'package:frontend/providers/cart_provider.dart';

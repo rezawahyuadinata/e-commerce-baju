@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/cart_model.dart';
 import 'package:frontend/pages/home/Widget/cart_card_widget.dart';
 import 'package:frontend/pages/home/Widget/checkout_card_widget.dart';
+import 'package:frontend/pages/home/Widget/loading_button.dart';
 import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/providers/cart_provider.dart';
 import 'package:frontend/providers/transaction_provider.dart';
@@ -9,9 +10,16 @@ import 'package:frontend/providers/transaction_provider.dart';
 import 'package:frontend/theme.dart';
 import 'package:provider/provider.dart';
 
-class CheckoutPage extends StatelessWidget {
+class CheckoutPage extends StatefulWidget {
   CheckoutPage({super.key, required this.cart});
   final KeranjangModel cart;
+
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +29,10 @@ class CheckoutPage extends StatelessWidget {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     handleCheckout() async {
+      setState(() {
+        isLoading = true;
+      });
+
       if (await transaksiProvider.checkout(
         authProvider.user.token,
         cartProvider.carts,
@@ -30,6 +42,9 @@ class CheckoutPage extends StatelessWidget {
         Navigator.pushNamedAndRemoveUntil(
             context, 'checkout-success', (route) => false);
       }
+      setState(() {
+        isLoading = false;
+      });
     }
 
     AppBar header() => AppBar(
@@ -168,7 +183,8 @@ class CheckoutPage extends StatelessWidget {
                     ),
                     PaymentSummaryDetail(
                       detail: 'Product Quantity',
-                      keterangan: '${cartProvider.totalItems(cart.id)} Items',
+                      keterangan:
+                          '${cartProvider.totalItems(widget.cart.id)} Items',
                     ),
                     SizedBox(
                       height: 12,
@@ -217,29 +233,35 @@ class CheckoutPage extends StatelessWidget {
                 thickness: 1,
                 color: Color(0xff2E3141),
               ),
-              Container(
-                height: 50,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(
-                  vertical: defaultMargin,
-                ),
-                child: TextButton(
-                  onPressed: handleCheckout,
-                  style: TextButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              isLoading
+                  ? Container(
+                      margin: EdgeInsets.only(
+                        bottom: 30,
+                      ),
+                      child: LoadingButton())
+                  : Container(
+                      height: 50,
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(
+                        vertical: defaultMargin,
+                      ),
+                      child: TextButton(
+                        onPressed: handleCheckout,
+                        style: TextButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Checkout Now',
+                          style: primaryTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Checkout Now',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ],

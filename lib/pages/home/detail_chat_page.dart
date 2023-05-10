@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/product_model.dart';
 import 'package:frontend/theme.dart';
 
 import 'Widget/chat_bubble_widget.dart';
 
 class DetailChatPage extends StatelessWidget {
-  const DetailChatPage({super.key});
+  const DetailChatPage({super.key, required this.product});
+
+  final ProdukModel product;
 
   @override
   Widget build(BuildContext context) {

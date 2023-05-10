@@ -52,3 +52,16 @@ class ProdukModel {
     };
   }
 }
+
+class UnintializedProdukModel extends ProdukModel {
+  UnintializedProdukModel(
+      {required super.id,
+      required super.name,
+      required super.price,
+      required super.description,
+      required super.tags,
+      required super.category,
+      required super.createdAt,
+      required super.updateAt,
+      required super.galleries});
+}

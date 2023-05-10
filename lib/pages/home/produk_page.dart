@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:frontend/models/product_model.dart';
+import 'package:frontend/pages/home/detail_chat_page.dart';
 import 'package:frontend/providers/cart_provider.dart';
 import 'package:frontend/providers/wishlist_provider.dart';
 import 'package:frontend/theme.dart';
@@ -358,7 +359,13 @@ class _ProductPageState extends State<ProductPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/detail-chat');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailChatPage(product: widget.product),
+                        ),
+                      );
                     },
                     child: Container(
                       width: 54,

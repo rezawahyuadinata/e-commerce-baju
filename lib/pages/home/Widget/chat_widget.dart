@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/home/detail_chat_page.dart';
 import 'package:frontend/theme.dart';
+
+import '../../../models/product_model.dart';
 
 class ListTileWidget extends StatelessWidget {
   const ListTileWidget({super.key});
@@ -8,7 +11,14 @@ class ListTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail-chat');
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailChatPage(
+        //       UnintializedProdukModel(),
+        //     ),
+        //   ),
+        // );
       },
       child: Container(
         margin: EdgeInsets.only(top: 33),
