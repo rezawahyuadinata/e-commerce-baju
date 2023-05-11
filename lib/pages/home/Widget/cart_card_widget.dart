@@ -37,7 +37,7 @@ class CartCardWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                     image: NetworkImage(
-                      cart.product.galleries[0].url,
+                      cart.product!.galleries![0].url!,
                     ),
                   ),
                 ),
@@ -50,11 +50,11 @@ class CartCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      cart.product.name,
+                      cart.product!.name!,
                       style: primaryTextStyle.copyWith(fontWeight: semiBold),
                     ),
                     Text(
-                      '\$ ${cart.product.price}',
+                      '\$ ${cart.product!.price}',
                       style: priceTextStyle,
                     ),
                   ],
@@ -65,7 +65,7 @@ class CartCardWidget extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      cartProvider.addQuantity(cart.id);
+                      cartProvider.addQuantity(cart.id!);
                     },
                     child: Image.asset(
                       'assets/icons/button_add.png',
@@ -78,7 +78,7 @@ class CartCardWidget extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      cartProvider.reduceQuantity(cart.id);
+                      cartProvider.reduceQuantity(cart.id!);
                     },
                     child: Image.asset(
                       'assets/icons/button_min.png',
@@ -94,7 +94,7 @@ class CartCardWidget extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              cartProvider.removeCart(cart.id);
+              cartProvider.removeCart(cart.id!);
             },
             child: Row(
               children: [

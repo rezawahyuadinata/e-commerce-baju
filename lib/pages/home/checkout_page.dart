@@ -34,7 +34,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       });
 
       if (await transaksiProvider.checkout(
-        authProvider.user.token,
+        authProvider.user.token!,
         cartProvider.carts,
         cartProvider.totalPrice(),
       )) {
@@ -184,7 +184,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     PaymentSummaryDetail(
                       detail: 'Product Quantity',
                       keterangan:
-                          '${cartProvider.totalItems(widget.cart.id)} Items',
+                          '${cartProvider.totalItems(widget.cart.id!)} Items',
                     ),
                     SizedBox(
                       height: 12,

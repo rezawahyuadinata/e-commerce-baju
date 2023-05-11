@@ -1,14 +1,14 @@
 import 'package:frontend/models/product_model.dart';
 
 class KeranjangModel {
-  late int id;
-  late ProdukModel product;
-  late int quantity;
+  late int? id;
+  late ProdukModel? product;
+  late int? quantity;
 
   KeranjangModel({
-    required this.id,
-    required this.product,
-    required this.quantity,
+    this.id,
+    this.product,
+    this.quantity,
   });
 
   KeranjangModel.fromJson(Map<String, dynamic> json) {
@@ -20,12 +20,14 @@ class KeranjangModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'product': product.toJson(),
+      'product': product?.toJson(),
       'quantity': quantity,
     };
   }
 
   getTotalPrice() {
-    return product.price * quantity;
+    var totalHargaProduct = product?.price;
+
+    return totalHargaProduct! * quantity!;
   }
 }

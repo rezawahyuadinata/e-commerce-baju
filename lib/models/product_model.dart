@@ -2,26 +2,26 @@ import 'package:frontend/models/category_model.dart';
 import 'package:frontend/models/gallery_model.dart';
 
 class ProdukModel {
-  late int id;
-  late String name;
-  late double price;
-  late String description;
-  late String tags;
-  late KategoriModel category;
-  late DateTime createdAt;
-  late DateTime updateAt;
-  late List<GaleriModel> galleries;
+  late int? id;
+  late String? name;
+  late double? price;
+  late String? description;
+  late String? tags;
+  late KategoriModel? category;
+  late DateTime? createdAt;
+  late DateTime? updatedAt;
+  late List<GaleriModel>? galleries;
 
   ProdukModel({
-    required this.id,
-    required this.name,
-    required this.price,
-    required this.description,
-    required this.tags,
-    required this.category,
-    required this.createdAt,
-    required this.updateAt,
-    required this.galleries,
+    this.id,
+    this.name,
+    this.price,
+    this.description,
+    this.tags,
+    this.category,
+    this.createdAt,
+    this.updatedAt,
+    this.galleries,
   });
 
   ProdukModel.fromJson(Map<String, dynamic> json) {
@@ -31,11 +31,11 @@ class ProdukModel {
     description = json['description'];
     tags = json['tags'];
     category = KategoriModel.fromJson(json['category']);
-    createdAt = DateTime.parse(json['createdAt']);
-    updateAt = DateTime.parse(json['updateAt']);
     galleries = json['galleries']
-        .map<GaleriModel>((galeri) => GaleriModel.fromJson(galeri))
+        .map<GaleriModel>((gallery) => GaleriModel.fromJson(gallery))
         .toList();
+    createdAt = DateTime.parse(json['created_at']);
+    updatedAt = DateTime.parse(json['updated_at']);
   }
 
   Map<String, dynamic> toJson() {
@@ -45,23 +45,12 @@ class ProdukModel {
       'price': price,
       'description': description,
       'tags': tags,
-      'category': category.toJson(),
-      'createdAt': createdAt.toString(),
-      'updateAt': updateAt.toString(),
-      'galleries': galleries.map((galeri) => galeri.toJson()).toList(),
+      'category': category?.toJson(),
+      'galleries': galleries?.map((gallery) => gallery.toJson()).toList(),
+      'created_at': createdAt.toString(),
+      'updated_at': updatedAt.toString(),
     };
   }
 }
 
-class UnintializedProdukModel extends ProdukModel {
-  UnintializedProdukModel(
-      {required super.id,
-      required super.name,
-      required super.price,
-      required super.description,
-      required super.tags,
-      required super.category,
-      required super.createdAt,
-      required super.updateAt,
-      required super.galleries});
-}
+class UninitializedProductModel extends ProdukModel {}

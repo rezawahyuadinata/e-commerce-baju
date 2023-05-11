@@ -1,10 +1,10 @@
 class KategoriModel {
-  late int id;
-  late String name;
+  late int? id;
+  late String? name;
 
   KategoriModel({
-    required this.id,
-    required this.name,
+    this.id,
+    this.name,
   });
 
   KategoriModel.fromJson(Map<String, dynamic> json) {

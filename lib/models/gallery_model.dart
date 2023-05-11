@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 class GaleriModel {
-  late int id;
-  late String url;
+  late int? id;
+  late String? url;
 
   GaleriModel({
-    required this.id,
-    required this.url,
+    this.id,
+    this.url,
   });
 
   GaleriModel.fromJson(Map<String, dynamic> json) {

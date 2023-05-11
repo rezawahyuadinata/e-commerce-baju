@@ -15,8 +15,8 @@ class CartProvider with ChangeNotifier {
   addCart(ProdukModel product) {
     if (productExist(product)) {
       int index =
-          _carts.indexWhere((element) => element.product.id == product.id);
-      _carts[index].quantity++;
+          _carts.indexWhere((element) => element.product?.id == product.id);
+      (_carts[index].quantity ?? 0) + 1;
     } else {
       _carts.add(KeranjangModel(
         id: _carts.length,
@@ -32,12 +32,12 @@ class CartProvider with ChangeNotifier {
   }
 
   addQuantity(int id) {
-    _carts[id].quantity++;
+    (_carts[id].quantity ?? 0) + 1;
     notifyListeners();
   }
 
   reduceQuantity(int id) {
-    _carts[id].quantity--;
+    (_carts[id].quantity ?? 0) - 1;
     if (_carts[id].quantity == 0) {
       removeCart(id);
     }
@@ -45,7 +45,7 @@ class CartProvider with ChangeNotifier {
   }
 
   totalItems(int id) {
-    _carts[id].quantity--;
+    (_carts[id].quantity ?? 0) - 1;
     if (_carts[id].quantity == 0) {
       _carts.removeAt(id);
     }
@@ -55,13 +55,15 @@ class CartProvider with ChangeNotifier {
   totalPrice() {
     double total = 0;
     for (var item in _carts) {
-      total += (item.quantity * item.product.price);
+      var hargaTotal = item.product?.price;
+
+      total += (item.quantity! * hargaTotal!);
     }
     return total;
   }
 
   productExist(ProdukModel product) {
-    if (_carts.indexWhere((element) => element.product.id == product.id) ==
+    if (_carts.indexWhere((element) => element.product?.id == product.id) ==
         -1) {
       return false;
     } else {

@@ -4,11 +4,16 @@ import 'package:frontend/theme.dart';
 
 import 'Widget/chat_bubble_widget.dart';
 
-class DetailChatPage extends StatelessWidget {
-  const DetailChatPage({super.key, required this.product});
+class DetailChatPage extends StatefulWidget {
+  DetailChatPage(this.product);
 
-  final ProdukModel product;
+  ProdukModel? product;
 
+  @override
+  State<DetailChatPage> createState() => _DetailChatPageState();
+}
+
+class _DetailChatPageState extends State<DetailChatPage> {
   @override
   Widget build(BuildContext context) {
     PreferredSize header() {
@@ -67,8 +72,8 @@ class DetailChatPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                'assets/images/image_shoes.png',
+              child: Image.network(
+                widget.product!.galleries![0].url!,
                 width: 54,
               ),
             ),
@@ -80,7 +85,7 @@ class DetailChatPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Alter Ego Shoes v2',
+                    widget.product!.name!,
                     style: primaryTextStyle.copyWith(
                       fontWeight: medium,
                       overflow: TextOverflow.ellipsis,
@@ -90,7 +95,7 @@ class DetailChatPage extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    '\$57.15',
+                    '\$${widget.product!.price}',
                     style: priceTextStyle.copyWith(
                       fontWeight: medium,
                     ),
@@ -98,9 +103,16 @@ class DetailChatPage extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(
-              'assets/icons/button_close.png',
-              width: 22,
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  widget.product = UninitializedProductModel();
+                });
+              },
+              child: Image.asset(
+                'assets/icons/button_close.png',
+                width: 22,
+              ),
             )
           ],
         ),
@@ -114,7 +126,9 @@ class DetailChatPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            listChat(),
+            widget.product is UninitializedProductModel
+                ? SizedBox()
+                : listChat(),
             Row(
               children: <Widget>[
                 Expanded(

@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
-  ProductPage({super.key, required this.product});
+  ProductPage({super.key, this.product});
 
-  final ProdukModel product;
+  final ProdukModel? product;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -183,7 +183,7 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.product.galleries.map((e) {
+            children: widget.product!.galleries!.map((e) {
               index++;
               return indikator(index);
             }).toList(),
@@ -219,14 +219,14 @@ class _ProductPageState extends State<ProductPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.product.name,
+                        widget.product!.name!,
                         style: primaryTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: semiBold,
                         ),
                       ),
                       Text(
-                        widget.product.category.name,
+                        widget.product!.category!.name!,
                         style: secondaryTextStyle.copyWith(
                           fontSize: 12,
                         ),
@@ -235,8 +235,8 @@ class _ProductPageState extends State<ProductPage> {
                   )),
                   GestureDetector(
                     onTap: () {
-                      wishlistProvider.setProduct(widget.product);
-                      if (wishlistProvider.isWishlist(widget.product)) {
+                      wishlistProvider.setProduct(widget.product!);
+                      if (wishlistProvider.isWishlist(widget.product!)) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: secondaryColor,
@@ -259,7 +259,7 @@ class _ProductPageState extends State<ProductPage> {
                       }
                     },
                     child: Image.asset(
-                      wishlistProvider.isWishlist(widget.product)
+                      wishlistProvider.isWishlist(widget.product!)
                           ? 'assets/icons/button_wishlist_blue.png'
                           : 'assets/icons/button_wishlist.png',
                       width: 46,
@@ -284,7 +284,7 @@ class _ProductPageState extends State<ProductPage> {
                 children: [
                   Text('Price Start From', style: primaryTextStyle),
                   Text(
-                    '\$${widget.product.price}',
+                    '\$${widget.product!.price}',
                     style: priceTextStyle.copyWith(
                         fontSize: 16, fontWeight: semiBold),
                   )
@@ -311,7 +311,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 12,
                   ),
                   Text(
-                    widget.product.description,
+                    widget.product!.description!,
                     style: subtitleTextStyle.copyWith(
                       fontWeight: light,
                     ),
@@ -362,8 +362,7 @@ class _ProductPageState extends State<ProductPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              DetailChatPage(product: widget.product),
+                          builder: (context) => DetailChatPage(widget.product),
                         ),
                       );
                     },
@@ -385,7 +384,7 @@ class _ProductPageState extends State<ProductPage> {
                       height: 54,
                       child: TextButton(
                         onPressed: () {
-                          cartProvider.addCart(widget.product);
+                          cartProvider.addCart(widget.product!);
                           showSuccessDialog();
                         },
                         style: TextButton.styleFrom(

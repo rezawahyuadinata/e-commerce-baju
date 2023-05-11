@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/product_model.dart';
 import 'package:frontend/pages/home/detail_chat_page.dart';
 import 'package:frontend/theme.dart';
 
-import '../../../models/product_model.dart';
-
 class ListTileWidget extends StatelessWidget {
-  const ListTileWidget({super.key});
-
+  ListTileWidget({super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => DetailChatPage(
-        //       UnintializedProdukModel(),
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailChatPage(UninitializedProductModel()),
+            ));
       },
       child: Container(
         margin: EdgeInsets.only(top: 33),

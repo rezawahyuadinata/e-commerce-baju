@@ -35,7 +35,7 @@ class ProductCardWidget extends StatelessWidget {
               height: 30,
             ),
             Image.network(
-              product.galleries[0].url,
+              product.galleries![0].url!,
               width: 215,
               height: 158,
               fit: BoxFit.cover,
@@ -46,14 +46,14 @@ class ProductCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.category.name,
+                    product.category!.name!,
                     style: secondaryTextStyle,
                   ),
                   SizedBox(
                     height: 6,
                   ),
                   Text(
-                    product.name,
+                    product.name!,
                     style: blackTextStyle.copyWith(
                         fontSize: 18,
                         fontWeight: semiBold,
@@ -106,7 +106,7 @@ class ListProductWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                product.galleries[0].url,
+                product.galleries![0].url!,
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -120,7 +120,7 @@ class ListProductWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.category.name,
+                    product.category!.name!,
                     style: secondaryTextStyle.copyWith(
                       fontSize: 12,
                     ),
@@ -129,7 +129,7 @@ class ListProductWidget extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    product.name,
+                    product.name!,
                     style: primaryTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: semiBold,
