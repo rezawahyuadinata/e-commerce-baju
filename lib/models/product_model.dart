@@ -2,15 +2,15 @@ import 'package:frontend/models/category_model.dart';
 import 'package:frontend/models/gallery_model.dart';
 
 class ProdukModel {
-  late int? id;
-  late String? name;
-  late double? price;
-  late String? description;
-  late String? tags;
-  late KategoriModel? category;
-  late DateTime? createdAt;
-  late DateTime? updatedAt;
-  late List<GaleriModel>? galleries;
+  int? id;
+  String? name;
+  double? price;
+  String? description;
+  String? tags;
+  KategoriModel? category;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<GaleriModel>? galleries;
 
   ProdukModel({
     this.id,

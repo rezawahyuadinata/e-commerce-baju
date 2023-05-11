@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "275807874332",
+    "project_id": "gwens-ae779",
+    "storage_bucket": "gwens-ae779.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275807874332:android:c17783d75446014dbf5ed9",
+        "android_client_info": {
+          "package_name": "com.reza.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275807874332-3sllldanf9kmq589b95ea7rhjg5vhe60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjYA0HIOewL8fRXj7w1ev7nZzBciNcgrY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275807874332-3sllldanf9kmq589b95ea7rhjg5vhe60.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
