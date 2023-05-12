@@ -31,7 +31,7 @@ class TransaksiService {
     );
 
     var response = await http.post(
-      url as Uri,
+      Uri.parse(url),
       headers: headers,
       body: body,
     );
